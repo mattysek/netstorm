@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/ryanb/private_pub.git
+  revision: 6b38471b3e392e9fa396040b773967d287849903
+  specs:
+    private_pub (1.0.3)
+      faye
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -97,6 +104,7 @@ GEM
     omniauth-oauth2 (1.1.1)
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
+    pg (0.14.1)
     pg (0.14.1-x86-mingw32)
     polyglot (0.3.3)
     rack (1.4.5)
@@ -157,6 +165,7 @@ DEPENDENCIES
   jquery-rails
   omniauth-facebook
   pg
+  private_pub!
   rails (= 3.2.11)
   sass-rails (~> 3.2.3)
   sqlite3

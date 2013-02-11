@@ -4,6 +4,7 @@ gem 'rails', '3.2.11'
 
 gem 'faye'
 gem 'omniauth-facebook'
+gem 'private_pub', :git => 'git://github.com/ryanb/private_pub.git'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
