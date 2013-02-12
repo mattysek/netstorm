@@ -2,11 +2,11 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.11'
 
-#gem 'thin'
+# gem 'thin'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 #gem 'faye'
-#gem 'private_pub'
+gem 'private_pub'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

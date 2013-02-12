@@ -1,0 +1,10 @@
+development:
+  server: "http://pv249-private-pub.herokuapp.com/faye"
+  secret_token: "53ac440a5f7d0750b7df1aee40a170d6b00d0644d0a5d74c9f84ec618be9c9b2"
+test:
+  server: "http://localhost:9292/faye"
+  secret_token: "secret"
+production:
+  server: "http://pv249-private-pub.herokuapp.com/faye"
+  secret_token: "53ac440a5f7d0750b7df1aee40a170d6b00d0644d0a5d74c9f84ec618be9c9b2"
+  signature_expiration: 86400 # one hour

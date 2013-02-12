@@ -1,5 +1,9 @@
 Netstorm::Application.routes.draw do
   
+  get "messages/index"
+  get "messages/create"
+  resources :messages
+
   #get "sessions/new"
   #get "sessions/create"
   #get "sessions/failure"
