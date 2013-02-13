@@ -1,2 +1,90 @@
-<%= link_to "Connect With Facebook", "/auth/facebook" %>
-<%= link_to "Connect With Google", "/auth/google_oauth2" %>
+﻿<div id="templatemo_body_wrapper">
+	<div id="templatemo_wrapper">
+        <div id="templatemo_header">
+            <div id="site_title"><h1><%= link_to "Brainstorming online", "/"%></h1></div>
+            <div id="templatemo_menu">
+                <ul>
+                  <li><a href="/" class="current">Home</a></li>
+				  <!-- add links for logged in user -->
+                  <li><a href="about.html">About</a></li>
+                  <li><a href="contact.html" class="last">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="templatemo_middle">
+            <div id="mid_left">
+                <div id="mid_title">Brainstorming online</div>
+                <p>Netstorming is service allowing you to work on topics with your colleagues online using brainstorming technique.</p>
+				<p>Try it right now, log in using your facebook or google account right now!</p>
+				<p class="top_p_last">LOG IN WITH:</p>
+					<a href="/auth/facebook" class="facebook"></a>
+					<a href="/auth/google_oauth2" class="google"></a>
+            </div>
+			<%=image_tag("ntstr.png", alt: "NetStorming", width: "270px", height: "270px")%>
+        </div>
+        <div id="templatemo_main">
+        	<div class="cbox_fw">
+                <div class="cbox_3b fp_box"><span class="b1"></span>
+                    <h4><a href="#">New Interaction</a></h4>
+                    <p>Home office? We are perfect for you!</p>
+                </div>
+                <div class="cbox_3b fp_box"><span class="b2"></span>
+                    <h4><a href="#">New ideas</a></h4>
+                    <p>Have all your ideas in one place.</p>
+                </div>
+                <div class="cbox_3b cbox_rm fp_box"><span class="b3"></span>
+                    <h4><a href="#">Economic style</a></h4>
+                    <p>Obviously...</p>
+                </div>
+                <div class="cleaner"></div>
+            </div>
+            <div class="cbox_fw">
+            	<div class="cbox_large float_l">
+                	<h2>Welcome to Net Storming</h2>
+                	<p>NetStorming is high quality service providing brainstorming capability to your business. New Ideas are born here!</p>
+					<div class="cleaner h20"></div>
+					<div class="cbox_small float_l">
+                    	<h5 class="tw_bullet">Brainstorming meetings</h5>
+						<%=image_tag("templatemo_image_05.png", alt: "brainstorming", class: "image_frame")%>
+                    	<p>About brainstorming meetings...</p>
+                        <a href="#" class="more float_r"><span>&gt;&gt;</span> Read More</a>                       
+                    </div>
+                    <div class="cbox_small float_r">
+                    	<h5 class="tw_bullet">Searching for new ideas</h5>
+						<%=image_tag("templatemo_image_06.png", alt: "ideas", class: "image_frame")%>
+                        <p>About ideas searching...</p>
+						<a href="#" class="more float_r"><span>&gt;&gt;</span> Read More</a>
+                    </div>
+                </div>
+                <div class="cbox_small float_r">
+                	<h2>News</h2>
+                    <div class="rp_box">
+						<%=image_tag("templatemo_image_09.png", alt: "image 1")%>
+                    	<p>Nunc varius, odio lobortis tempor mollis, sapien risus dapibus ligula...</p>
+                        <a href="#" class="more float_r"><span>&gt;&gt;</span> Read More</a>
+                      <div class="cleaner"></div>
+                  	</div>
+                    <div class="rp_box">
+                    	<%=image_tag("templatemo_image_07.png", alt: "image 2")%>
+                    	<p>Donec aliquet, neque eget mattis lacinia, dolor mauris ultricies diam...</p>
+                        <a href="#" class="more float_r"><span>&gt;&gt;</span> Read More</a>
+                      <div class="cleaner"></div>
+                  	</div>
+                    <div class="rp_box">
+						<%=image_tag("templatemo_image_08.png", alt: "image 3")%>
+                    	<p>Vestibulum sem urna, euismod ornare malesuada eget, vehicula id enim...</p>
+                        <a href="#" class="more float_r"><span>&gt;&gt;</span> Read More</a>
+                      <div class="cleaner"></div>
+                  	</div>
+                </div>
+                <div class="cleaner"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="templatemo_footer_wrapper">
+    <div id="templatemo_footer">
+        Copyright 2013 <a href="/">NetStorming</a>
+        <div class="cleaner"></div>
+    </div>
+</div>
