@@ -1,0 +1,7 @@
+<%= form_for Group.new do |f| %>
+	<%= f.label "Name" %>
+  <%= f.text_field :name %><br/>
+  <%= f.label "Topic" %>
+  <%= f.text_field :topic %><br/>
+  <%= f.submit "Send" %>
+<% end %>

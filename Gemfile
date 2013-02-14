@@ -8,6 +8,8 @@ gem 'omniauth-google-oauth2'
 #gem 'faye'
 gem 'private_pub'
 
+# gem 'client_side_validations'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 

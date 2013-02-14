@@ -1,5 +1,5 @@
 class Group < ActiveRecord::Base
-  attr_accessible :group_id, :name
+  attr_accessible :name, :topic
   has_many :users
-  validates :name, :group_id, :presence => true, :uniqueness => true
+  validates :name,  :presence => true, :uniqueness => true
 end

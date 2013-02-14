@@ -1,5 +1,12 @@
 Netstorm::Application.routes.draw do
   
+	resources :groups
+
+  # get "groups/new"
+  # get "groups/post"
+  get "groups/find"
+  get "groups/edit"
+
   get '/chatrooms/:channel_name' => 'rooms#index'
   post '/chatrooms/:channel_name/create_message' => 'rooms#create_message'
   # get "messages/index"
