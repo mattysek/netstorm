@@ -4,7 +4,7 @@ class CreateMessages < ActiveRecord::Migration
       t.string :author
       t.text :content
       t.string :channel
-
+	  
       t.timestamps
     end
   end

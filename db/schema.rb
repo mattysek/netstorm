@@ -33,9 +33,9 @@ ActiveRecord::Schema.define(:version => 20130214122109) do
     t.string   "author"
     t.text     "content"
     t.string   "channel"
+    t.string   "action"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.integer  "group_id"
   end
 
   create_table "users", :force => true do |t|

@@ -1,12 +1,111 @@
+<script>
+PrivatePub.subscribe("<%= "/channels/" + params[:channel_name] %>", function(message) {
+switch(message.action)
+{
+	case "chat":
+		$("#chat").append("<div>" + message.content + "</div>");
+		$("#new_message")[0].reset();
+		break;
+	case "drawIdea":
+		drawIdea(message.content);
+		break;
+}
+});
+
+window.onload = function() 
+{
+    stage = new Kinetic.Stage({
+      container: 'canvas_container',
+      width: 980,
+      height: 2000
+    });
+    ideaColumn = 1;
+    ideaRow = 1;
+    ideaRotate = 0;
+    drawingLayer = new Kinetic.Layer();
+    stage.add(drawingLayer);
+	
+	<% @drawImage_messages.each do |m| %>
+	drawIdea("<%= m.content %>");
+	<% end %>
+};
+  
+function drawIdea(text)
+{
+    if(ideaRow == 11) return;
+    var text = new Kinetic.Text({
+        x: 50 + (250 * (ideaColumn-1)) + Math.floor(Math.random() * (45 +45 + 1) -45),
+        y: 50 + (200 * (ideaRow - 1)) + Math.floor(Math.random() * (24 +24 + 1) -24),
+        stroke: '#000',
+        draggable: true,
+        strokeWidth: 1,
+        fill: '#ffc',
+        text: text,
+        fontSize: 13,
+        fontFamily: 'Tahoma',
+        textFill: '#000',
+        width: 200,
+        padding: 10,
+        align: 'justify',
+        fontStyle: 'italic',
+        shadow: {
+        color: 'black',
+        blur: 4,
+        offset: [5, 5],
+        opacity: 0.3
+        }
+    });
+    var rotate = -1;
+    if(ideaRotate % 3 == 0 || ideaRotate % 5 == 0) rotate = 1;
+    text.rotate((Math.PI/60)*rotate);
+    ideaColumn++;
+    if(ideaColumn == 5)
+    {
+        ideaColumn = 1;
+        ideaRow++;
+    }
+    ideaRotate++;
+    
+    drawingLayer.add(text);
+    drawingLayer.draw();
+}
+
+function toImage() 
+{
+    stage.toDataURL({
+        callback: function(dataUrl) {
+            window.open(dataUrl);
+        }
+    });
+}
+
+function toJSON() 
+{
+	stage.toJSON();
+}
+</script>
+<div id="canvas_container"></div>
+    <div id="canvas_buttons">
+	<!--
+	  <textarea id="textinput" rows="4" cols="50">
+	  </textarea>
+      <!--<input type="button" value="Draw Idea" onclick="drawIdea(document.getElementById('textinput').value)"/>
+	  <input type="button" value="Export to JSON" onclick="toJSON()"/>
+      <input type="button" value="Export to image" onclick="toImage()"/>-->
+	  <%= form_for Message.new, :url => "/chatrooms/" + params[:channel_name] + "/create_message", remote: true do |f| %>
+	    <%= f.hidden_field :action, :value => "drawIdea" %>
+		<%= f.text_field :content %>
+		<%= f.submit "Send" %>
+	  <% end %>
+    </div>
 chatroom: <%= params[:channel_name] %>
 
 <div id="chat">
-  <%= render @messages, :template => 'rooms/message' %>
+  <%= render @chat_messages, :template => 'rooms/message' %>
 </div>
-
 <%= form_for Message.new, :url => "/chatrooms/" + params[:channel_name] + "/create_message", remote: true do |f| %>
+  <%= f.hidden_field :action, :value => "chat" %>
   <%= f.text_field :content %>
   <%= f.submit "Send" %>
 <% end %>
-
 <%= subscribe_to "/channels/" + params[:channel_name] %>
