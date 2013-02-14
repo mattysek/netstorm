@@ -1,7 +1,7 @@
 chatroom: <%= params[:channel_name] %>
 
 <div id="chat">
-  <%= render @messages %>
+  <%= render @messages, :template => 'rooms/message' %>
 </div>
 
 <%= form_for Message.new, :url => "/chatrooms/" + params[:channel_name] + "/create_message", remote: true do |f| %>

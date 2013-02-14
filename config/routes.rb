@@ -1,7 +1,7 @@
 Netstorm::Application.routes.draw do
   
-  get '/chatrooms/:channel_name' => 'messages#index'
-  post '/chatrooms/:channel_name/create_message' => 'messages#create'
+  get '/chatrooms/:channel_name' => 'rooms#index'
+  post '/chatrooms/:channel_name/create_message' => 'rooms#create_message'
   # get "messages/index"
   # get "messages/create"
   # resources :messages
