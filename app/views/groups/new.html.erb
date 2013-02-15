@@ -1,7 +1,17 @@
-<%= form_for Group.new do |f| %>
-	<%= f.label "Name" %>
-  <%= f.text_field :name %><br/>
-  <%= f.label "Topic" %>
-  <%= f.text_field :topic %><br/>
+<%= form_for @group do |f| %>
+
+	<%= render "errors/form_validation_errors", :target => @group  %>
+
+
+	<div class="form_field">
+		<%= f.label :name %>
+		<br/>
+	  <%= f.text_field :name %>
+	</div>
+  <div class="form_field">
+	  <%= f.label :topic %>
+	  <br/>
+	  <%= f.text_field :topic %>
+	</div>
   <%= f.submit "Send" %>
 <% end %>

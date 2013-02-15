@@ -1,25 +1,37 @@
 class GroupsController < ApplicationController
+
+	before_filter :authenticate
+
 	def new
-		# TODO require login?
-		redirect_to :login unless session[:user_id]
+		@group = Group.new
 	end
 
   def create
-  	#TODO some better validation (at least view or even better client side validation)
   	@group = Group.new(params[:group])
+  	@group.channel = @group.name
 
-  	if @group.valid?
-  		@group.save!
-  	else 
-  		render :text => "group not valid: " + @group.errors.inspect
+  	if @group.save
+  		redirect_to(@group, :notice => 'Group was successfully created.') 
+  	else
+  		render :action => 'new', :target => @group
   	end
-
-  	@group.update_attribute(:channel, params[:group][:name])
   end
 
-  def find
+  def show 
+  	@group = Group.where('id = ?', params[:id])[0]
+
+  	render @group
   end
 
-  def edit
+  # def find
+  # end
+
+  # def edit
+  # end
+
+  private
+
+  def authenticate
+    redirect_to :login unless session[:user_id]
   end
 end
