@@ -265,8 +265,32 @@ canvas {
 	overflow-y: scroll;
 	width: 990px;
 	height: 560px;
-	flow: left;
 }
 #canvas_buttons {
-	clear: both;
+	width: 450px;
+	float: left;
+}
+#chat_wrap{
+	float: right;
+	width: 450px;
+}
+#chat_wrap form{
+	margin-top: 10px;
+	float: right;
+}
+#chat{
+	float: right;
+	width: 450px;
+	height: 500px;
+	color: black;
+	overflow: scroll;
+}
+.ow_hid{
+	width: 990px;
+	overflow: hidden;
+}
+.send_but{
+	display: block;
+	margin: 5px auto;
+	padding: 10px;
 }

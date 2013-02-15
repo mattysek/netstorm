@@ -9,6 +9,24 @@ switch(message.action)
 	case "drawIdea":
 		drawIdea(message.content);
 		break;
+	case "stop":
+		$("#canvas_buttons_normal *").disable();
+		alert("Supervisor decided to stop brainstorming, brainstorming board editing has been disabled.");
+		break;
+	case "save":
+		drawingLayer.remove();
+		drawingLayer = Kinetic.Node.create(message.content);
+		for(var n = 0; n < drawingLayer.getChildren().length; n++){
+			var shape = drawingLayer.getChildren()[n];
+			shape.on("dblclick", function(evt) {
+				if(evt.shape.getFill() != 'black') evt.shape.setFill('black');
+				else evt.shape.setFill('#ffc');
+			});
+		}
+		stage.add(drawingLayer);
+		$("#canvas_buttons_normal *").enable();
+		alert("Supervisor ended evaluation, you can now see results on your board.");
+		break;
 }
 });
 
@@ -25,12 +43,25 @@ window.onload = function()
     drawingLayer = new Kinetic.Layer();
     stage.add(drawingLayer);
 	
-	<% @drawImage_messages.each do |m| %>
-	drawIdea("<%= m.content %>");
+	<% if @save_message %>
+		drawingLayer.remove();
+		drawingLayer = Kinetic.Node.create("<%= @save_message.content %>".replace(/&quot;/g,'"'));
+		for(var n = 0; n < drawingLayer.getChildren().length; n++){
+			var shape = drawingLayer.getChildren()[n];
+			shape.on("dblclick", function(evt) {
+				if(evt.shape.getFill() != 'black') evt.shape.setFill('black');
+				else evt.shape.setFill('#ffc');
+			});
+		}
+		stage.add(drawingLayer);
+	<% else %>
+		<% @drawImage_messages.each do |m| %>
+		drawIdea("<%= m.content %>");
+		<% end %>
 	<% end %>
 };
   
-function drawIdea(text)
+function drawIdea(textc)
 {
     if(ideaRow == 11) return;
     var text = new Kinetic.Text({
@@ -38,9 +69,10 @@ function drawIdea(text)
         y: 50 + (200 * (ideaRow - 1)) + Math.floor(Math.random() * (24 +24 + 1) -24),
         stroke: '#000',
         draggable: true,
+		listening: true,
         strokeWidth: 1,
         fill: '#ffc',
-        text: text,
+        text: textc,
         fontSize: 13,
         fontFamily: 'Tahoma',
         textFill: '#000',
@@ -55,6 +87,11 @@ function drawIdea(text)
         opacity: 0.3
         }
     });
+	text.on("dblclick", function(evt) {
+		if(evt.shape.getFill() != 'black') evt.shape.setFill('black');
+		else evt.shape.setFill('#ffc');
+	});
+	
     var rotate = -1;
     if(ideaRotate % 3 == 0 || ideaRotate % 5 == 0) rotate = 1;
     text.rotate((Math.PI/60)*rotate);
@@ -65,7 +102,7 @@ function drawIdea(text)
         ideaRow++;
     }
     ideaRotate++;
-    
+	
     drawingLayer.add(text);
     drawingLayer.draw();
 }
@@ -79,9 +116,22 @@ function toImage()
     });
 }
 
-function toJSON() 
+function save()
 {
-	stage.toJSON();
+    document.getElementById('save_hidden_content').setAttribute('value', drawingLayer.toJSON());
+	$("#save_form").submit();
+}
+
+$.fn.disable = function() {
+    return this.each(function() {
+        if (typeof this.disabled != "undefined") this.disabled = true;
+    });
+}
+
+$.fn.enable = function() {
+    return this.each(function() {
+        if (typeof this.disabled != "undefined") this.disabled = false;
+    });
 }
 </script>
 <%= subscribe_to "/channels/" + params[:channel_name] %>
@@ -107,7 +157,8 @@ function toJSON()
         <div id="templatemo_middle">
             <div id="mid_left">
 			    <% if current_user %>
-					<div id="mid_title">Welcome <%= current_user.name %> </div>
+					<div id="mid_title"><!-- group name--> <%= current_user.name %> </div>
+					<!-- group topic-->
 					<p><%= current_user.email %></p>
 				<% else %>
 					<div id="mid_title">Brainstorming online</div>
@@ -121,46 +172,39 @@ function toJSON()
 			<%=image_tag("ntstr.png", alt: "NetStorming", width: "270px", height: "270px")%>
         </div>
         <div id="templatemo_main">
-        	<div class="cbox_fw">
-                <div class="cbox_3b fp_box"><span class="b1"></span>
-                    <h4><a href="#">New Interaction</a></h4>
-                    <p>Home office? We are perfect for you!</p>
-                </div>
-                <div class="cbox_3b fp_box"><span class="b2"></span>
-                    <h4><a href="#">New ideas</a></h4>
-                    <p>Have all your ideas in one place.</p>
-                </div>
-                <div class="cbox_3b cbox_rm fp_box"><span class="b3"></span>
-                    <h4><a href="#">Economic style</a></h4>
-                    <p>Obviously...</p>
-                </div>
-                <div class="cleaner"></div>
-            </div>
-            <div class="cbox_fw">
-            		<div id="canvas_container"></div>
+			<div id="canvas_container"></div>
+			<div class="rp_box"></div>
+            <div class="cbox_fw ow_hid">
 					<div id="canvas_buttons">
-					<!--
-					  <textarea id="textinput" rows="4" cols="50">
-					  </textarea>
-					  <!--<input type="button" value="Draw Idea" onclick="drawIdea(document.getElementById('textinput').value)"/>
-					  <input type="button" value="Export to JSON" onclick="toJSON()"/>
-					  <input type="button" value="Export to image" onclick="toImage()"/>-->
-					  <%= form_for Message.new, :url => "/chatrooms/" + params[:channel_name] + "/create_message", remote: true do |f| %>
-						<%= f.hidden_field :action, :value => "drawIdea" %>
-						<%= f.text_field :content %>
-						<%= f.submit "Send" %>
-					  <% end %>
+						<div id="canvas_buttons_normal">
+						  <%= form_for Message.new, :url => "/chatrooms/" + params[:channel_name] + "/create_message", remote: true do |f| %>
+							<%= f.hidden_field :action, :value => "drawIdea" %>
+							<%= f.text_area :content, :size => "60x10" %>
+							<%= f.submit "Add Idea", :class => "send_but" %>
+						  <% end %>
+						  <input type="button" value="Export to image" onclick="toImage()" class="send_but" />
+						</div>
+						<div class="rp_box"></div>
+						<%= form_for Message.new, :url => "/chatrooms/" + params[:channel_name] + "/create_message", remote: true do |f| %>
+							<%= f.hidden_field :action, :value => "stop" %>
+							<%= f.submit "STOP", :class => "send_but" %>
+						<% end %>
+						<%= form_for Message.new, :url => "/chatrooms/" + params[:channel_name] + "/create_message", :id => "save_form", remote: true do |f| %>
+							<%= f.hidden_field :content, :value => "", :id => "save_hidden_content" %>
+							<%= f.hidden_field :action, :value => "save" %>
+							<%= f.submit "Save and publish", :class => "send_but", :onclick => "save()" %>
+						<% end %>
 					</div>
-                <div class="cbox_small float_r">
-                	<div id="chat">
-					  <%= render @chat_messages, :template => 'rooms/message' %>
+					<div id="chat_wrap">
+						<div id="chat">
+						  <%= render @chat_messages, :template => 'rooms/message' %>
+						</div>
+						<%= form_for Message.new, :url => "/chatrooms/" + params[:channel_name] + "/create_message", remote: true do |f| %>
+						  <%= f.hidden_field :action, :value => "chat" %>
+						  <%= f.text_area :content, :size => "61x10" %>
+						  <%= f.submit "Send", :class => "send_but" %>
+						<% end %>
 					</div>
-					<%= form_for Message.new, :url => "/chatrooms/" + params[:channel_name] + "/create_message", remote: true do |f| %>
-					  <%= f.hidden_field :action, :value => "chat" %>
-					  <%= f.text_field :content %>
-					  <%= f.submit "Send" %>
-					<% end %>
-                </div>
                 <div class="cleaner"></div>
             </div>
         </div>
