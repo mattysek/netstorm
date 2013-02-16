@@ -2,15 +2,20 @@
 
 	<%= render "errors/form_validation_errors", :target => @group  %>
 
-
 	<div class="form_field">
-		<%= f.label :name %>
-		<br/>
+		<%= f.label :name %><br/>
 	  <%= f.text_field :name %>
 	</div>
+	<div class="form_field">
+	  <%= f.label :password %><br/>
+	  <%= f.password_field :password %>
+	</div>
+	<div class="form_field">
+	  <%= f.label :password_confirmation %><br/>
+	  <%= f.password_field :password_confirmation %>
+	</div>
   <div class="form_field">
-	  <%= f.label :topic %>
-	  <br/>
+	  <%= f.label :topic %><br/>
 	  <%= f.text_field :topic %>
 	</div>
   <%= f.submit "Send" %>

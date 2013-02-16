@@ -7,6 +7,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 #gem 'faye'
 gem 'private_pub'
+gem 'bcrypt-ruby', :require => 'bcrypt'
 
 # gem 'client_side_validations'
 

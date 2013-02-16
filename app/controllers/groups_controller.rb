@@ -8,7 +8,14 @@ class GroupsController < ApplicationController
 
   def create
   	@group = Group.new(params[:group])
-  	@group.channel = @group.name
+
+  	# @group.password = "anypass"
+  	# @group.password_salt = "anypasssalt"
+  	# render :text => @group.password
+  	# @group.set_attribute(:password_salt, BCrypt::Engine.generate_salt)
+  	# @group.password_salt = BCrypt::Engine.generate_salt
+   #  @group.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
+    
 
   	if @group.save
   		redirect_to(@group, :notice => 'Group was successfully created.') 
@@ -23,6 +30,20 @@ class GroupsController < ApplicationController
   	render @group
   end
 
+  def join
+  	@group = Group.find_by_id(params[:group_id])
+
+  	if request.get?
+  		render 'groups/join_form'
+  	else
+  		if Group.authenticate(@group.name, params[:group][:password])
+  			render :text => "OK"
+  		else
+  			render :text => "wrong password" 
+  		end
+  	end
+  end
+
   # def find
   # end
 
@@ -32,6 +53,6 @@ class GroupsController < ApplicationController
   private
 
   def authenticate
-    redirect_to :login unless @current_user
+    redirect_to :login unless current_user
   end
 end

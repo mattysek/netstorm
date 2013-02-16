@@ -1,0 +1,9 @@
+wanna join group <%= @group.id %>?
+
+<%= form_for @group, :url => '/groups/%s/join' % @group.id do |f| %>
+	<div class="form_field">
+	  <%= f.label :password %><br/>
+	  <%= f.password_field :password %>
+	</div>
+  <%= f.submit "Send" %>
+<% end %>
