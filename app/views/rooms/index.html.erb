@@ -121,7 +121,7 @@ function toImage()
         }
     });
 }
-<% if @group.supervisor == @current_user %>
+<% if @group.supervisor == @current_user.id %>
 function save()
 {
     document.getElementById('save_hidden_content').setAttribute('value', drawingLayer.toJSON());
@@ -186,7 +186,7 @@ $.fn.enable = function() {
 						  <input type="button" value="Export to image" onclick="toImage()" class="send_but" />
 						</div>
 						<div class="rp_box"></div>
-						<% if @group.supervisor == @current_user %>
+						<% if @group.supervisor == @current_user.id %>
 						<%= form_for Message.new, :url => "/chatrooms/" + params[:channel_name] + "/create_message", remote: true do |f| %>
 							<%= f.hidden_field :action, :value => "stop" %>
 							<%= f.submit "STOP", :class => "send_but" %>
