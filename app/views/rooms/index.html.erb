@@ -115,13 +115,13 @@ function toImage()
         }
     });
 }
-
+<% if is_supervisor %>
 function save()
 {
     document.getElementById('save_hidden_content').setAttribute('value', drawingLayer.toJSON());
 	$("#save_form").submit();
 }
-
+<% end %>
 $.fn.disable = function() {
     return this.each(function() {
         if (typeof this.disabled != "undefined") this.disabled = true;
@@ -141,33 +141,16 @@ $.fn.enable = function() {
             <div id="site_title"><h1><%= link_to "Brainstorming online", "/"%></h1></div>
             <div id="templatemo_menu">
                 <ul>
-				  <% if not current_user %>
-					  <li><a href="/" class="current">Home</a></li>
-					  <li><a href="about.html">About</a></li>
-					  <li><a href="contact.html" class="last">Contact</a></li>
-				  <% else %>
-					  <li><a href="/" class="current">Home</a></li>
-					  <li><a href="about.html">About</a></li>
-					  <li><a href="contact.html">Contact</a></li>
+					  <li><a href="/">Home</a></li>
+					  <li><a href="/groups/new"  class="current">Groups</a></li>
 					  <li><a href="/logout" class="last">Log out</a></li>
-				  <% end %>
                 </ul>
             </div>
         </div>
         <div id="templatemo_middle">
             <div id="mid_left">
-			    <% if current_user %>
-					<div id="mid_title"><!-- group name--> <%= current_user.name %> </div>
-					<!-- group topic-->
-					<p><%= current_user.email %></p>
-				<% else %>
-					<div id="mid_title">Brainstorming online</div>
-					<p>Netstorming is service allowing you to work on topics with your colleagues online using brainstorming technique.</p>
-					<p>Try it right now, log in using your facebook or google account right now!</p>
-					<p class="top_p_last">LOG IN WITH:</p>
-						<a href="/auth/facebook" class="facebook"></a>
-						<a href="/auth/google_oauth2" class="google"></a>
-				<% end %>
+					<div id="mid_title"> <%= group.name %> </div>
+					<p><%= group.topic %></p>
             </div>
 			<%=image_tag("ntstr.png", alt: "NetStorming", width: "270px", height: "270px")%>
         </div>
@@ -185,6 +168,7 @@ $.fn.enable = function() {
 						  <input type="button" value="Export to image" onclick="toImage()" class="send_but" />
 						</div>
 						<div class="rp_box"></div>
+						<% if is_supervisor %>
 						<%= form_for Message.new, :url => "/chatrooms/" + params[:channel_name] + "/create_message", remote: true do |f| %>
 							<%= f.hidden_field :action, :value => "stop" %>
 							<%= f.submit "STOP", :class => "send_but" %>
@@ -193,6 +177,7 @@ $.fn.enable = function() {
 							<%= f.hidden_field :content, :value => "", :id => "save_hidden_content" %>
 							<%= f.hidden_field :action, :value => "save" %>
 							<%= f.submit "Save and publish", :class => "send_but", :onclick => "save()" %>
+						<% end %>
 						<% end %>
 					</div>
 					<div id="chat_wrap">

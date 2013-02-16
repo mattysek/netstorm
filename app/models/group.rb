@@ -1,5 +1,5 @@
 class Group < ActiveRecord::Base
-  attr_accessible :name, :topic
-  has_many :users
+  attr_accessible :name, :topic, :supervisor
+  has_and_belongs_to_many :users
   validates :name,  :presence => true, :uniqueness => true
 end

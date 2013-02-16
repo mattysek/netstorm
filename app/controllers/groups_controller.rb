@@ -32,6 +32,6 @@ class GroupsController < ApplicationController
   private
 
   def authenticate
-    redirect_to :login unless session[:user_id]
+    redirect_to :login unless @current_user
   end
 end

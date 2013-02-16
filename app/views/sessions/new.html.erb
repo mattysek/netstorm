@@ -6,12 +6,10 @@
                 <ul>
 				  <% if not current_user %>
 					  <li><a href="/" class="current">Home</a></li>
-					  <li><a href="about.html">About</a></li>
-					  <li><a href="contact.html" class="last">Contact</a></li>
+					  <li><a href="about.html" class="last">About</a></li>
 				  <% else %>
 					  <li><a href="/" class="current">Home</a></li>
-					  <li><a href="about.html">About</a></li>
-					  <li><a href="contact.html">Contact</a></li>
+					  <li><a href="/groups/new">Groups</a></li>
 					  <li><a href="/logout" class="last">Log out</a></li>
 				  <% end %>
                 </ul>
