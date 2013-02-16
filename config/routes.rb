@@ -1,6 +1,7 @@
 Netstorm::Application.routes.draw do
   
-
+  get '/mygroups/' => 'groups#show_my_groups'
+	get '/groups/' => 'groups#browse'
   match '/groups/:group_id/join' => 'groups#join'
 	resources :groups
 

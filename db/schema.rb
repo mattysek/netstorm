@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130216105723) do
+ActiveRecord::Schema.define(:version => 20130216163326) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "provider"
@@ -31,6 +31,14 @@ ActiveRecord::Schema.define(:version => 20130216105723) do
     t.string   "password_salt"
   end
 
+  create_table "groups_users", :id => false, :force => true do |t|
+    t.integer "user_id"
+    t.integer "group_id"
+  end
+
+  add_index "groups_users", ["group_id", "user_id"], :name => "index_groups_users_on_group_id_and_user_id"
+  add_index "groups_users", ["user_id", "group_id"], :name => "index_groups_users_on_user_id_and_group_id"
+
   create_table "messages", :force => true do |t|
     t.string   "author"
     t.text     "content"
@@ -46,13 +54,5 @@ ActiveRecord::Schema.define(:version => 20130216105723) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
-
-  create_table "users_groups", :id => false, :force => true do |t|
-    t.integer "user_id"
-    t.integer "group_id"
-  end
-
-  add_index "users_groups", ["group_id", "user_id"], :name => "index_users_groups_on_group_id_and_user_id"
-  add_index "users_groups", ["user_id", "group_id"], :name => "index_users_groups_on_user_id_and_group_id"
 
 end

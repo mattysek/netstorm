@@ -1,0 +1,14 @@
+<%= form_tag '/groups/', :method => 'get' do %>
+	<%= label_tag :search %>
+	<%= text_field_tag :search %>
+	<%= submit_tag "Search" %>
+<% end %>
+
+Groups:<br/>
+<% @groups.each do |group| %>
+	<%= group.name %>
+	<% unless group.users.include? current_user %>
+		<%= link_to 'join this group', '/groups/%s/join' % group.id %>
+	<% end %>
+	<br/>
+<% end %>

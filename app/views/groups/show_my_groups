@@ -1,0 +1,5 @@
+My Groups:<br/>
+<% @groups.each do |group| %>
+	<%= group.name %>
+	<br/>
+<% end %>
