@@ -7,7 +7,7 @@ switch(message.action)
 		$("#new_message")[0].reset();
 		break;
 	case "drawIdea":
-		drawIdea(message.content);
+		drawIdea(message.content.cont, message.content.color);
 		break;
 	case "stop":
 		$("#canvas_buttons_normal *").disable();
@@ -56,12 +56,12 @@ window.onload = function()
 		stage.add(drawingLayer);
 	<% else %>
 		<% @drawImage_messages.each do |m| %>
-		drawIdea("<%= m.content %>");
+		drawIdea("<%= m.content.cont %>", "<%= m.content.color %>");
 		<% end %>
 	<% end %>
 };
   
-function drawIdea(textc)
+function drawIdea(textc, colorc)
 {
     if(ideaRow == 11) return;
     var text = new Kinetic.Text({
@@ -71,7 +71,7 @@ function drawIdea(textc)
         draggable: true,
 		listening: true,
         strokeWidth: 1,
-        fill: '#ffc',
+        fill: colorc,
         text: textc,
         fontSize: 13,
         fontFamily: 'Tahoma',
@@ -122,6 +122,15 @@ function save()
 	$("#save_form").submit();
 }
 <% end %>
+
+function drawIdea_form_submit()
+{
+	document.getElementById('drawIdea_hidden_content')
+		.setAttribute('value', JSON.stringify({color : document.getElementById('drawIdea_color').value,
+								cont : document.getElementById('drawIdea_content').value}));
+	$("#drawIdea_form").submit();
+}
+
 $.fn.disable = function() {
     return this.each(function() {
         if (typeof this.disabled != "undefined") this.disabled = true;
@@ -133,6 +142,10 @@ $.fn.enable = function() {
         if (typeof this.disabled != "undefined") this.disabled = false;
     });
 }
+
+$('#drawIdea_color_picker').colorPicker({			
+  click: function(color){document.getElementById('drawIdea_color').setAttribute('value', color);} 
+});
 </script>
 <%= subscribe_to "/channels/" + params[:channel_name] %>
 <div id="templatemo_body_wrapper">
@@ -160,10 +173,13 @@ $.fn.enable = function() {
             <div class="cbox_fw ow_hid">
 					<div id="canvas_buttons">
 						<div id="canvas_buttons_normal">
-						  <%= form_for Message.new, :url => "/chatrooms/" + params[:channel_name] + "/create_message", remote: true do |f| %>
+						  <%= form_for Message.new, :url => "/chatrooms/" + params[:channel_name] + "/create_message", :id => "drawIdea_form", remote: true do |f| %>
 							<%= f.hidden_field :action, :value => "drawIdea" %>
-							<%= f.text_area :content, :size => "60x10" %>
-							<%= f.submit "Add Idea", :class => "send_but" %>
+							<%= f.hidden_field :content, :value => "", :id => "drawIdea_hidden_content" %>
+							<input type="textarea" rows="10" cols="60" id="drawIdea_content"/>
+							<div id="drawIdea_color_picker"><div/>
+							<input type="hidden" value="" id="drawIdea_color" />
+							<%= f.submit "Add Idea", :class => "send_but", :onclick => "drawIdea_form_submit() %>
 						  <% end %>
 						  <input type="button" value="Export to image" onclick="toImage()" class="send_but" />
 						</div>
