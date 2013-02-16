@@ -7,7 +7,7 @@ switch(message.action)
 		$("#new_message")[0].reset();
 		break;
 	case "drawIdea":
-		drawIdea(message.content.cont, message.content.color);
+		drawIdea(jQuery.parseJSON(message.content).cont, jQuery.parseJSON(message.content).color);
 		break;
 	case "stop":
 		$("#canvas_buttons_normal *").disable();
@@ -32,6 +32,10 @@ switch(message.action)
 
 window.onload = function() 
 {
+	$('#drawIdea_color_picker').colorPicker({			
+	  click: function(color){document.getElementById('drawIdea_color').setAttribute('value', color);} 
+	});
+	
     stage = new Kinetic.Stage({
       container: 'canvas_container',
       width: 980,
@@ -55,8 +59,10 @@ window.onload = function()
 		}
 		stage.add(drawingLayer);
 	<% else %>
+		var x = "";
 		<% @drawImage_messages.each do |m| %>
-		drawIdea("<%= m.content.cont %>", "<%= m.content.color %>");
+		x = jQuery.parseJSON("<%= m.content %>".replace(/&quot;/g,'"'));
+		drawIdea(x.cont, x.color);
 		<% end %>
 	<% end %>
 };
@@ -115,7 +121,7 @@ function toImage()
         }
     });
 }
-<% if is_supervisor %>
+<% if @group.supervisor == @current_user %>
 function save()
 {
     document.getElementById('save_hidden_content').setAttribute('value', drawingLayer.toJSON());
@@ -142,10 +148,6 @@ $.fn.enable = function() {
         if (typeof this.disabled != "undefined") this.disabled = false;
     });
 }
-
-$('#drawIdea_color_picker').colorPicker({			
-  click: function(color){document.getElementById('drawIdea_color').setAttribute('value', color);} 
-});
 </script>
 <%= subscribe_to "/channels/" + params[:channel_name] %>
 <div id="templatemo_body_wrapper">
@@ -155,15 +157,15 @@ $('#drawIdea_color_picker').colorPicker({
             <div id="templatemo_menu">
                 <ul>
 					  <li><a href="/">Home</a></li>
-					  <li><a href="/groups/new"  class="current">Groups</a></li>
+					  <li><a href="/groups"  class="current">Groups</a></li>
 					  <li><a href="/logout" class="last">Log out</a></li>
                 </ul>
             </div>
         </div>
         <div id="templatemo_middle">
             <div id="mid_left">
-					<div id="mid_title"> <%= group.name %> </div>
-					<p><%= group.topic %></p>
+					<div id="mid_title"> <%= @group.topic %></div>
+					<p>Group name: <%= @group.name %></p>
             </div>
 			<%=image_tag("ntstr.png", alt: "NetStorming", width: "270px", height: "270px")%>
         </div>
@@ -176,15 +178,15 @@ $('#drawIdea_color_picker').colorPicker({
 						  <%= form_for Message.new, :url => "/chatrooms/" + params[:channel_name] + "/create_message", :id => "drawIdea_form", remote: true do |f| %>
 							<%= f.hidden_field :action, :value => "drawIdea" %>
 							<%= f.hidden_field :content, :value => "", :id => "drawIdea_hidden_content" %>
-							<input type="textarea" rows="10" cols="60" id="drawIdea_content"/>
-							<div id="drawIdea_color_picker"><div/>
+							<textarea rows="10" cols="60" id="drawIdea_content"></textarea>
+							<div id="drawIdea_color_picker"></div>
 							<input type="hidden" value="" id="drawIdea_color" />
-							<%= f.submit "Add Idea", :class => "send_but", :onclick => "drawIdea_form_submit() %>
+							<%= f.submit "Add Idea", :class => "send_but", :onclick => "drawIdea_form_submit()" %>
 						  <% end %>
 						  <input type="button" value="Export to image" onclick="toImage()" class="send_but" />
 						</div>
 						<div class="rp_box"></div>
-						<% if is_supervisor %>
+						<% if @group.supervisor == @current_user %>
 						<%= form_for Message.new, :url => "/chatrooms/" + params[:channel_name] + "/create_message", remote: true do |f| %>
 							<%= f.hidden_field :action, :value => "stop" %>
 							<%= f.submit "STOP", :class => "send_but" %>
