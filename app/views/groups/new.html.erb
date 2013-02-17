@@ -1,22 +1,37 @@
-<%= form_for @group do |f| %>
+<div id="stylized" class="myform">
+<%= form_for @group, :html => { :id => "form", :name => "form"} do |f| %>
+	
+	<h1>Create New Group</h1>
+	<p>Enter new group's information</p>
+	
 
 	<%= render "errors/form_validation_errors", :target => @group  %>
-
-	<div class="form_field">
-		<%= f.label :name %><br/>
-	  <%= f.text_field :name %>
-	</div>
-	<div class="form_field">
-	  <%= f.label :password %><br/>
-	  <%= f.password_field :password %>
-	</div>
-	<div class="form_field">
-	  <%= f.label :password_confirmation %><br/>
-	  <%= f.password_field :password_confirmation %>
-	</div>
-  <div class="form_field">
-	  <%= f.label :topic %><br/>
-	  <%= f.text_field :topic %>
-	</div>
-  <%= f.submit "Send" %>
+			<div class="spacer">				
+			<label>Name
+			<span class="small">Unique name among all other groops</span>
+			</label>
+		  <%= f.text_field :name, :html => { :id => "group_form_form_input_field"} %>
+			</div><br/>
+			<div class="spacer">
+		  <label>Password
+		  <span class="small">Required, make it however weak you want</span></label>
+		  <%= f.password_field :password, :html => { :id => "group_form_form_input_field"} %>
+		  </div><br/>
+			<div class="spacer">
+		  <label>Password Confimation
+		  <span class="small">The same password preferably</span></label>
+		  <%= f.password_field :password_confirmation, :html => { :id => "group_form_form_input_field"} %>
+		  </div><br/>
+			<div class="spacer">
+		  <label>Topic
+		  <span class="small">What's it all about?</span></label>
+		  <%= f.text_area :topic, :id => "stylized_text_area" %>
+		  </div><br/>
+			<div class="spacer center">
+			<h3>
+	  	<%= f.submit "Create", :id => "s_button" %>
+	  </h3>
+	  	</div>
 <% end %>
+</div>
+<br/><br/>

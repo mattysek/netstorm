@@ -1,3 +1,179 @@
 // Place all the styles related to the groups controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#groups_search {
+	width: 960px;
+	padding: 20px;	
+	/*margin: 0 auto;*/
+	/*background: #CBEEFF;*/
+	text-align: center;
+	border:solid 2px #b7ddf2;
+	background:#ebf4fb;
+}
+
+/*#group_succinct {
+}*/
+
+#groups_list {
+	/*width: 960px;*/
+	padding: 20px;	
+	/*margin: 0 auto;*/
+}
+
+#groups_search_text {
+	color: #2081da; 
+}
+
+#group_topic {
+	text-indent: 2.0em;
+}
+
+
+body{
+font-family:"Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+font-size:12px;
+}
+p, h1, form, button{border:0; margin:0; padding:0;}
+.spacer{clear:both; height:70px;}
+/* ----------- My Form ----------- */
+.myform{
+margin:0 auto;
+width:430px;
+height: 100%;
+padding:14px;
+}
+
+/* ----------- stylized ----------- */
+#stylized{
+border:solid 2px #b7ddf2;
+background:#ebf4fb;
+}
+#stylized h1 {
+font-size:14px;
+font-weight:bold;
+margin-bottom:8px;
+color: #2081da; 
+}
+#stylized p{
+font-size:11px;
+color:#666666;
+margin-bottom:20px;
+border-bottom:solid 1px #b7ddf2;
+padding-bottom:10px;
+}
+#stylized label{
+display:block;
+font-weight:bold;
+text-align:right;
+width:140px;
+float:left;
+color: #2081da; 
+}
+#stylized .small{
+color:#666666;
+display:block;
+font-size:11px;
+font-weight:normal;
+text-align:right;
+width:140px;
+}
+#stylized input{
+float:left;
+font-size:12px;
+padding:4px 2px;
+border:solid 1px #aacfe4;
+width:250px;
+margin:2px 0 20px 10px;
+}
+#s_button{
+margin-left: auto;
+margin-right: auto;
+font-size:30px;
+font-weight:bold;
+color: #2081da;
+background: #CBEEFF;
+clear:both;
+margin:0 auto;
+width:80px;
+height:40px;
+text-align:center;
+/*line-height:50px;*/
+}
+textarea#stylized_text_area{
+float:left;
+font-size:12px;
+padding:4px 2px;
+border:solid 1px #aacfe4;
+width:250px;
+height:150px;
+margin:2px 0 20px 10px;
+}
+.group_details_label{
+	font-size:20px;
+	/*font-weight:bold;*/
+}
+
+.group_details {
+	text-indent: 2.0em;
+	padding: 10px;
+	font-size:22px;
+}
+
+.group_details_smaller {
+	text-indent: 2.0em;
+	padding: 10px;
+	font-size:16px;
+}
+
+.group_details_label_big{
+	font-size:28px;
+	font-weight:bold;
+}
+
+#stylized_pass{
+	height: 100px;
+	width: 450px;
+	margin:0 auto;
+border:solid 2px #b7ddf2;
+background:#ebf4fb;
+padding: 20px;
+
+}
+
+
+#stylized_pass label{
+display:block;
+font-weight:bold;
+text-align:right;
+width:140px;
+float:left;
+color: #2081da; 
+}
+#stylized_pass .small{
+color:#666666;
+display:block;
+font-size:11px;
+font-weight:normal;
+text-align:right;
+width:140px;
+}
+#stylized_pass input{
+float:left;
+font-size:12px;
+padding:4px 2px;
+border:solid 1px #aacfe4;
+width:250px;
+margin:2px 0 20px 10px;
+}
+
+.join_error{
+	font-size:14px;
+	font-weight:bold;
+	color: #FF3737;
+}
+
+.join_notice{
+	font-size:14px;
+	font-weight:bold;
+}

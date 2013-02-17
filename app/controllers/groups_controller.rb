@@ -4,6 +4,8 @@ class GroupsController < ApplicationController
 
 	def new
 		@group = Group.new
+
+		render :layout => 'group'
 	end
 
   def create
@@ -15,27 +17,30 @@ class GroupsController < ApplicationController
   	if @group.save
   		redirect_to(@group, :notice => 'Group was successfully created.') 
   	else
-  		render :action => 'new', :target => @group
+  		render :action => 'new', :target => @group, :layout => 'group'
   	end
   end
 
   def show 
   	@group = Group.where('id = ?', params[:id])[0]
 
-  	render @group
+  	@supervisor = User.where('id = ?', @group.supervisor)[0]
+
+  	render :layout => 'group'
   end
 
   def join
-  	@group = Group.find_by_id(params[:group_id])
+  	@group = Group.find_by_name(params[:group_name])
 
   	if request.get?
-  		render 'groups/join_form'
+  		render 'groups/join_form', :layout => 'group'
   	else
   		if Group.authenticate(@group.name, params[:group][:password])
   			@group.users << current_user
-  			render :text => "OK"
+  			redirect_to '/chatrooms/' + @group.name
   		else
-  			render :text => "wrong password" 
+  			flash[:alert] = "You have entered wrong password, try again"
+  			render 'groups/join_form', :layout => 'group'
   		end
   	end
   end
@@ -48,10 +53,11 @@ class GroupsController < ApplicationController
   	else
 	  	@groups = Group.all
 	  end
+
+	  render :layout => 'group'
   end
 
   def show_my_groups
-  	# @groups = GroupsUsers.joins('JOIN groups_users ON groups_users.group_id = groups.id').where(:user_id => current_user.id)
   	all_groups = Group.all
   	@groups = []
 
@@ -60,6 +66,8 @@ class GroupsController < ApplicationController
   			@groups << group
   		end
   	end
+
+  	render :layout => 'group'
   end
 
   private

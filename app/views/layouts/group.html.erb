@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>NetStorming</title>
+  <meta name="keywords" content="brainstorming, ideas" />
+  <meta name="description" content="NetStorming is service for brainstroming acros internet." />
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+	<div id="templatemo_body_wrapper">
+		<div id="templatemo_wrapper">
+			<div id="templatemo_header">
+			    <div id="site_title"><h1><%= link_to "Brainstorming online", "/"%></h1></div>
+			    <div id="templatemo_menu">
+			        <ul>
+			  <% if not current_user %>
+				  <li><a href="/" class="current">Home</a></li>
+				  <li><a href="about.html" class="last">About</a></li>
+			  <% else %>
+				  <li><a href="/" class="current">Home</a></li>
+				  <li><a href="/groups/">Groups</a></li>
+				  <li><a href="/logout" class="last">Log out</a></li>
+			  <% end %>
+			        </ul>
+			    </div>
+			</div>
+
+			<div id="templatemo_middle">
+            <div id="mid_left">
+					<div id="mid_title"> <%= current_user.name %> </div>
+					<p><%= current_user.email %></p>
+            </div>
+			<%=image_tag("ntstr.png", alt: "NetStorming", width: "270px", height: "270px")%>
+        </div>
+
+			<div id="templatemo_main">
+				<%= yield %>
+			</div>
+
+		</div>
+	</div>
+
+	<div id="templatemo_footer_wrapper">
+    <div id="templatemo_footer">
+        Copyright 2013 <a href="/">NetStorming</a>
+        <div class="cleaner"></div>
+    </div>
+	</div>
+</body>
+</html>

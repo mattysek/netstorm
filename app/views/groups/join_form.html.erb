@@ -1,9 +1,24 @@
-wanna join group <%= @group.id %>?
+<div id="stylized_pass" >
+<div class="spacer">	
+<%= form_for @group, :url => '/groups/%s/join' % @group.name do |f| %>
 
-<%= form_for @group, :url => '/groups/%s/join' % @group.id do |f| %>
+	<% if flash[:alert] %>
+		<div class="join_error"> <%= flash[:alert] %></div><br/>
+	<% else %>
+		<div class="join_notice"> To join <%= @group.name %> you have to enter the right password</div><br/>
+	<% end %>
+
 	<div class="form_field">
-	  <%= f.label :password %><br/>
+	  <label>Password
+			<span class="small">To join <%= @group.name %> you have to enter the right password</span></label>
 	  <%= f.password_field :password %>
 	</div>
+	<% if false %>
   <%= f.submit "Send" %>
+  <% end %>
 <% end %>
+</div>
+</div>
+
+<br/>
+<br/>

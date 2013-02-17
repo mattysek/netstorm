@@ -1,0 +1,43 @@
+<div>
+<span class="tw_bullet group_details_label">Name</span>
+<span class="group_details"><%= @group.name %></span><br/><br/>
+</div>
+
+<div>
+<span class="tw_bullet group_details_label">Topic</span>
+<span class="group_details_smaller"><%= @group.topic %></span><br/><br/>
+</div>
+
+<div>
+<span class="tw_bullet group_details_label">Supervisor</span>
+<span class="group_details_smaller"><%= @supervisor.name %></span><br/><br/>
+</div>
+
+<div>
+<span class="tw_bullet group_details_label">Members</span>
+<span class="group_details_smaller">
+<% @group.users.count.times do |i| %>
+<%= @group.users[i].name %>
+<%= ", " if i < @group.users.count - 1 %>
+<% end %>
+</span><br/><br/>
+</div>
+
+<div>
+<span class="tw_bullet group_details_label">Created at</span>
+<span class="group_details_smaller"><%= @group.created_at %></span><br/><br/>
+</div>
+
+<br>
+
+<div class="group_details_label_big">
+<% if @group.users.include? current_user %>
+<%= link_to "Enter group's chatroom", '/chatrooms/' +  @group[:name] %>
+<% else %>
+<%= link_to "Join this group", '/groups/' +  @group.name + "/join" %>
+<% end %>
+</div>
+
+<br/>
+<br/>
+<br/>
