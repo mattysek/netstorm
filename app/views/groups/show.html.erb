@@ -1,3 +1,4 @@
+<div class="cbox_fw group_show_container">
 <div>
 <span class="tw_bullet group_details_label">Name</span>
 <span class="group_details"><%= @group.name %></span><br/><br/>
@@ -30,14 +31,11 @@
 
 <br>
 
-<div class="group_details_label_big">
+<div class="group_details_label_big" style="text-align: center;">
 <% if @group.users.include? current_user %>
-<%= link_to "Enter group's chatroom", '/chatrooms/' +  @group[:name] %>
+<%= link_to "Enter group's brainstorming board", '/chatrooms/' +  @group[:name] %>
 <% else %>
 <%= link_to "Join this group", '/groups/' +  @group.name + "/join" %>
 <% end %>
 </div>
-
-<br/>
-<br/>
-<br/>
+</div>

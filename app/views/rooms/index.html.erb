@@ -3,7 +3,7 @@ PrivatePub.subscribe("<%= "/channels/" + params[:channel_name] %>", function(mes
 switch(message.action)
 {
 	case "chat":
-		$("#chat").append("<div>" + message.content + "</div>");
+		$("#chat").append("<div class=\"rp_box\">" + message.content + "</div>");
 		$("#new_message")[0].reset();
 		break;
 	case "drawIdea":
