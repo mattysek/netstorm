@@ -37,7 +37,7 @@ class GroupsController < ApplicationController
   	else
   		if Group.authenticate(@group.name, params[:group][:password])
   			@group.users << current_user
-  			redirect_to '/chatrooms/' + @group.name.html_safe
+  			redirect_to ('/chatrooms/' + @group.name).html_safe
   		else
   			flash[:alert] = "You have entered wrong password, try again"
   			render 'groups/join_form', :layout => 'group'
