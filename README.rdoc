@@ -1,3 +1,6 @@
+==NetStorming
+Brainstorming online. Uses faye and private_pub for communication. Their configuration mus be set for messaging to work. have fun ;-)
+
 Copyright (c) 2013, Matìj Škrabánek
  All rights reserved.
 
